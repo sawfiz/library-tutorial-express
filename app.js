@@ -1,4 +1,4 @@
-require('dotenv').config()
+require('dotenv').config();
 
 const createError = require('http-errors');
 const express = require('express');
@@ -12,15 +12,12 @@ const usersRouter = require('./routes/users');
 const app = express();
 
 // Set up mongoose connection
-const mongoose = require("mongoose");
-mongoose.set("strictQuery", false);
+const mongoose = require('mongoose');
+mongoose.set('strictQuery', false);
 
-async function connectToDatabase() {
+async function connectToMongoDB() {
   try {
-    await mongoose.connect(process.env.MONGODB_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
+    await mongoose.connect(process.env.MONGODB_URI);
     console.log('Database connected');
   } catch (error) {
     console.error('Database connection error:', error);
@@ -28,7 +25,7 @@ async function connectToDatabase() {
 }
 
 // Connect to the database when the app starts
-connectToDatabase();
+connectToMongoDB();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -44,12 +41,12 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   next(createError(404));
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
