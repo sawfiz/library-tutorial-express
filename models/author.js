@@ -1,3 +1,4 @@
+const {DateTime} = require("luxon")
 const mongoose = require('mongoose');
 
 // Since we are using one file per modal, there is no need to give specific
@@ -21,10 +22,20 @@ schema.virtual('name').get(function () {
 });
 
 // Virtual for author's URL
-schema.virtual("url").get(function(){
+schema.virtual('url').get(function () {
   // We don't use an arrow function as we'll need the this object
-  return `catalog/author/${this._id}`
-})
+  return `/catalog/author/${this._id}`;
+});
+
+schema.virtual('lifespan').get(function () {
+  const date_of_birth_formmated = this.date_of_birth
+    ? DateTime.fromJSDate(this.date_of_birth).toLocaleString(DateTime.DATE_MED)
+    : '';
+  const date_of_death_formmated = this.date_of_death
+    ? DateTime.fromJSDate(this.date_of_death).toLocaleString(DateTime.DATE_MED)
+    : '';
+  return date_of_birth_formmated + ' - ' + date_of_death_formmated;
+});
 
 // The first argument is the singular name of the collection your model is for.
 // Mongoose automatically looks for the plural, lowercased version of your model
