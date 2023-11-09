@@ -20,7 +20,7 @@ const bookinstances = [];
 const mongoose = require("mongoose");
 mongoose.set("strictQuery", false);
 
-const mongoDB = userArgs[0];
+const mongoDB = 'mongodb+srv://sawfizup:jeb_pzj4nbk1QVP_avh@cluster0.3yjn0sl.mongodb.net/library?retryWrites=true&w=majority';
 
 main().catch((err) => console.log(err));
 
