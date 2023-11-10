@@ -7,7 +7,6 @@ const asyncHandler = require('express-async-handler');
 const validateObjectId = require('../middleware/validateObjectId');
 const {
   body,
-  valdationResult,
   validationResult,
 } = require('express-validator');
 
