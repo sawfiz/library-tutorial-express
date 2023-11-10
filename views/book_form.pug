@@ -1,0 +1,47 @@
+extends layout
+
+block content
+  h1= title
+
+  form(action='' method="POST")
+    .form-group
+      label(for='title') #[strong Title:]
+      input.form-control(type='text' id='title' name='title'
+        placeholder='Harry Potter'
+        value=(book === undefined ? '' : book.title))
+
+    .form-group
+      label(for='author') #[strong Author:]
+      select#author.form-control(type='select', placeholder='Select author' name='author' required='true' )
+        each author in author_list
+          if book
+            option(value=author._id selected=(author._id.toString()===book.author._id.toString() ? 'selected' : false) ) #{author.name}
+          else
+            option(value=author._id) #{author.name}
+
+    .form-group
+      label(for='summary') #[strong Summary:]
+      input.form-control(type='text' id='summary' name='summary'
+        placeholder='What this book is about...'
+        value=(book === undefined ? '' : book.summary))
+
+      label(for='isbn') #[strong ISBN:]
+      input.form-control(type='text' id='isbn' name='isbn'
+        placeholder='isbn1234...'
+        value=(book === undefined ? '' : book.isbn))
+
+    .form-group
+      label(for="genre") #[strong Genre:]
+      div
+        each genre in genre_list
+          div(style='display: inline; padding-right:10px;')
+            input.checkbox-input(type='checkbox' id=genre._id name='genre'
+            value=genre._id checked=genre.checked)
+            label(for=genre.id) #{genre.name}
+
+    button.btn.btn-primary(type='submit') Submit
+
+  if errors
+    ul
+      each error in errors
+        li.text-danger!= error.msg
